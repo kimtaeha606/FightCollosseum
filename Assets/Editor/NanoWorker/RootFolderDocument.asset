@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbff98671e3f71428c6f8432c408422, type: 3}
+  m_Name: RootFolderDocument
+  m_EditorClassIdentifier: NanoWorker.Editor::FolderDocument
+  _folderId: f854364524e54177ad9949ff3342d2b2
+  _folderName: Root
+  _nodes: []
+  _arrows:
+  - fromNodeId: b59e3fa4f6c04e2ba4b3ba60bb1df2b6
+    toNodeId: 4bf3da090c5b497bbff63cbb0b06df4b
+    isEvent: 1
+  - fromNodeId: 4bf3da090c5b497bbff63cbb0b06df4b
+    toNodeId: 5c23af2c4b77403d95f966cd1c93fe6f
+    isEvent: 0
+  - fromNodeId: 5c23af2c4b77403d95f966cd1c93fe6f
+    toNodeId: b59e3fa4f6c04e2ba4b3ba60bb1df2b6
+    isEvent: 0
+  _folders:
+  - folderId: b59e3fa4f6c04e2ba4b3ba60bb1df2b6
+    folderName: Mainmenu
+    position: {x: 314, y: 629.3333}
+    folderDocument: {fileID: 11400000, guid: de94d090444ee8042b5217b71f30909e, type: 2}
+  - folderId: 4bf3da090c5b497bbff63cbb0b06df4b
+    folderName: GamePlay
+    position: {x: 749.6505, y: 197.89948}
+    folderDocument: {fileID: 11400000, guid: 12f8c19b851330142bde1f801246a29c, type: 2}
+  - folderId: 5c23af2c4b77403d95f966cd1c93fe6f
+    folderName: GameOver
+    position: {x: 1414.2374, y: 183.198}
+    folderDocument: {fileID: 11400000, guid: 4113beee0b126ba47ad88ea9b2b220e9, type: 2}

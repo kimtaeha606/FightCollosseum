@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbff98671e3f71428c6f8432c408422, type: 3}
+  m_Name: FolderDocument_f7bbfd37459a4f5eab475ffa932afa4c
+  m_EditorClassIdentifier: NanoWorker.Editor::FolderDocument
+  _folderId: 1d23a0ea00c64fa9978c7720491f031e
+  _folderName: WeaponManager
+  _nodes:
+  - nodeId: 207727f74f224ebf9ce379c59d5712f3
+    nodeName: WeaponController
+    position: {x: 702.35986, y: -43.018017}
+  - nodeId: 05ba8b2fb6814ea881e12e0ce29cc8fe
+    nodeName: WeaponData
+    position: {x: 955.3392, y: 381.53882}
+  - nodeId: 986a50e3c7854b8b956b3265f477289f
+    nodeName: IWeapon
+    position: {x: -41.832928, y: 368.33282}
+  _arrows:
+  - fromNodeId: 207727f74f224ebf9ce379c59d5712f3
+    toNodeId: 05ba8b2fb6814ea881e12e0ce29cc8fe
+    isEvent: 0
+  - fromNodeId: 986a50e3c7854b8b956b3265f477289f
+    toNodeId: c0fd4f781ac14ce2b45dfd6c3607f759
+    isEvent: 0
+  - fromNodeId: 207727f74f224ebf9ce379c59d5712f3
+    toNodeId: c0fd4f781ac14ce2b45dfd6c3607f759
+    isEvent: 0
+  _folders:
+  - folderId: c0fd4f781ac14ce2b45dfd6c3607f759
+    folderName: Weapons
+    position: {x: 453.8237, y: 385.4936}
+    folderDocument: {fileID: 11400000, guid: e0bca1138165bd7419fe9a88b6210e0f, type: 2}

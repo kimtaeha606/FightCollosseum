@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbff98671e3f71428c6f8432c408422, type: 3}
+  m_Name: FolderDocument_9873cbac733d40079df4d6c9d7c4a6e0
+  m_EditorClassIdentifier: NanoWorker.Editor::FolderDocument
+  _folderId: 5c23af2c4b77403d95f966cd1c93fe6f
+  _folderName: GameOver
+  _nodes: []
+  _arrows: []
+  _folders: []

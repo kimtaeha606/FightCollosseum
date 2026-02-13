@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbff98671e3f71428c6f8432c408422, type: 3}
+  m_Name: FolderDocument_c55d6759979f49119197dd6d64c69a44
+  m_EditorClassIdentifier: NanoWorker.Editor::FolderDocument
+  _folderId: 4bf3da090c5b497bbff63cbb0b06df4b
+  _folderName: GamePlay
+  _nodes:
+  - nodeId: 77e2f6eba2dc4b158f3d33108bcc53a8
+    nodeName: CharacterApplier
+    position: {x: 34.164078, y: 624.35913}
+  - nodeId: 85c0b462ad6b49849592e9d7627f2d30
+    nodeName: IDamageable
+    position: {x: 391.15634, y: -397.1754}
+  _arrows:
+  - fromNodeId: 1d23a0ea00c64fa9978c7720491f031e
+    toNodeId: 77e2f6eba2dc4b158f3d33108bcc53a8
+    isEvent: 0
+  - fromNodeId: 85c0b462ad6b49849592e9d7627f2d30
+    toNodeId: 9514ebd30c5945c49f151a397338fde4
+    isEvent: 0
+  - fromNodeId: 85c0b462ad6b49849592e9d7627f2d30
+    toNodeId: ad254e49e01246d0bb6d06100e9cb480
+    isEvent: 0
+  _folders:
+  - folderId: ad254e49e01246d0bb6d06100e9cb480
+    folderName: PlayerManager
+    position: {x: 641.2952, y: 2.179329}
+    folderDocument: {fileID: 11400000, guid: bb51bb7fc3bf58c43af8fdae359bfccb, type: 2}
+  - folderId: 1d23a0ea00c64fa9978c7720491f031e
+    folderName: WeaponManager
+    position: {x: 606.87683, y: 636.6018}
+    folderDocument: {fileID: 11400000, guid: bf591b7a9cf79a64eb681f6a6e8816ba, type: 2}
+  - folderId: 9514ebd30c5945c49f151a397338fde4
+    folderName: MonsterManager
+    position: {x: 159.20834, y: -7.944031}
+    folderDocument: {fileID: 11400000, guid: 72ff5f46877a97e4487ae0003dcedd24, type: 2}

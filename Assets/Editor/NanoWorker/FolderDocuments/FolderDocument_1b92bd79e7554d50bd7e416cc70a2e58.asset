@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbff98671e3f71428c6f8432c408422, type: 3}
+  m_Name: FolderDocument_1b92bd79e7554d50bd7e416cc70a2e58
+  m_EditorClassIdentifier: NanoWorker.Editor::FolderDocument
+  _folderId: 9514ebd30c5945c49f151a397338fde4
+  _folderName: MonsterManager
+  _nodes:
+  - nodeId: a5b1d3a16745462dafbeeef700c9b75c
+    nodeName: MonsterAI
+    position: {x: -49.662884, y: 1063.567}
+  - nodeId: 370a022b425e4bae992107a3ca011c50
+    nodeName: DifficultyManager
+    position: {x: 152.15549, y: 701.3471}
+  - nodeId: 8722ca0c696445d3834ac7440a4224c3
+    nodeName: MonsterSpawner
+    position: {x: -366.84088, y: 699.824}
+  - nodeId: f5bdc98e5a4b446d880548c7feb629ce
+    nodeName: MonsterHealth
+    position: {x: 361.49854, y: 1060.0342}
+  - nodeId: 950dec520415438aa37ea78aa020a80f
+    nodeName: ScoreManager
+    position: {x: 857.7018, y: 822.37335}
+  - nodeId: 6b00d5ba03d44fbab30e25003f1b34ff
+    nodeName: 'MonsterData '
+    position: {x: 142.44391, y: 1440.3707}
+  _arrows:
+  - fromNodeId: f5bdc98e5a4b446d880548c7feb629ce
+    toNodeId: 950dec520415438aa37ea78aa020a80f
+    isEvent: 1
+  - fromNodeId: f5bdc98e5a4b446d880548c7feb629ce
+    toNodeId: 6b00d5ba03d44fbab30e25003f1b34ff
+    isEvent: 0
+  - fromNodeId: a5b1d3a16745462dafbeeef700c9b75c
+    toNodeId: 6b00d5ba03d44fbab30e25003f1b34ff
+    isEvent: 0
+  - fromNodeId: a5b1d3a16745462dafbeeef700c9b75c
+    toNodeId: 370a022b425e4bae992107a3ca011c50
+    isEvent: 0
+  - fromNodeId: 950dec520415438aa37ea78aa020a80f
+    toNodeId: 370a022b425e4bae992107a3ca011c50
+    isEvent: 1
+  - fromNodeId: f5bdc98e5a4b446d880548c7feb629ce
+    toNodeId: 370a022b425e4bae992107a3ca011c50
+    isEvent: 0
+  - fromNodeId: 8722ca0c696445d3834ac7440a4224c3
+    toNodeId: 370a022b425e4bae992107a3ca011c50
+    isEvent: 0
+  _folders: []

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbff98671e3f71428c6f8432c408422, type: 3}
+  m_Name: FolderDocument_515e9a5e2c5e4073bf2e4e015408d602
+  m_EditorClassIdentifier: NanoWorker.Editor::FolderDocument
+  _folderId: c0fd4f781ac14ce2b45dfd6c3607f759
+  _folderName: Weapons
+  _nodes:
+  - nodeId: 89ac9c4997c1499c98d9cc25a58e2c6a
+    nodeName: Gladius
+    position: {x: 22.182007, y: -136.46829}
+  - nodeId: 6c5a28abf71547bc95de77460919e731
+    nodeName: Trident
+    position: {x: 18.52386, y: 158.91359}
+  - nodeId: 8317293bde9045de8bb23fe932b646c7
+    nodeName: Hammer
+    position: {x: 398.03912, y: -143.78435}
+  - nodeId: df31504eb9ff4ee8ac74ed8752c59903
+    nodeName: LongBow
+    position: {x: 416.32916, y: 165.31503}
+  _arrows: []
+  _folders: []
