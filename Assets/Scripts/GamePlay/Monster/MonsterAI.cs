@@ -18,33 +18,12 @@ public class MonsterAI : MonoBehaviour
 
     [Header("Animation Settings")]
     [SerializeField] private string moveBoolParameter = "IsMove";
-    [SerializeField] private string moveSpeedParameter = "MoveSpeed";
-    [SerializeField] private string attackTriggerParameter = "Attack";
-    [SerializeField] private string idleStateName = "Idle";
-    [SerializeField] private string moveStateName = "Move";
-    [SerializeField] private string attackStateName = "Attack";
-    [SerializeField] private float attackInterval = 1.25f;
+    [SerializeField] private string attackBoolParameter = "Attack";
 
     private int moveBoolHash = -1;
-    private int moveSpeedHash = -1;
-    private int attackTriggerHash = -1;
-    private int idleStateHash = -1;
-    private int moveStateHash = -1;
-    private int attackStateHash = -1;
+    private int attackBoolHash = -1;
     private bool hasMoveBoolParameter;
-    private bool hasMoveSpeedParameter;
-    private bool hasAttackTriggerParameter;
-    private float nextAttackTime;
-
-    private enum AnimationState
-    {
-        None,
-        Idle,
-        Move,
-        Attack
-    }
-
-    private AnimationState currentAnimationState = AnimationState.None;
+    private bool hasAttackBoolParameter;
 
     private void Reset()
     {
@@ -99,7 +78,6 @@ public class MonsterAI : MonoBehaviour
     {
         if (rb == null || player == null)
         {
-            UpdateMovementAnimation(false, 0f);
             return;
         }
 
@@ -111,19 +89,16 @@ public class MonsterAI : MonoBehaviour
         if (distanceToPlayer <= attackRange)
         {
             rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
-            UpdateMovementAnimation(false, 0f);
-            if (!TryPlayAttackAnimation())
-            {
-                TryPlayIdleAnimation();
-            }
-
+            SetMoveAnimationState(false);
+            SetAttackAnimationState(true);
             return;
         }
 
+        SetAttackAnimationState(false);
+        SetMoveAnimationState(true);
+
         if (toPlayer.sqrMagnitude <= Mathf.Epsilon)
         {
-            UpdateMovementAnimation(false, 0f);
-            TryPlayIdleAnimation();
             return;
         }
 
@@ -134,10 +109,6 @@ public class MonsterAI : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
         Quaternion nextRotation = Quaternion.Slerp(rb.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime);
         rb.MoveRotation(nextRotation);
-
-        UpdateMovementAnimation(true, moveSpeed);
-        TryPlayMoveAnimation();
-        EnsureMoveAnimationLoop();
     }
 
     public void SetTarget(Transform target)
@@ -153,11 +124,7 @@ public class MonsterAI : MonoBehaviour
         }
 
         moveBoolHash = Animator.StringToHash(moveBoolParameter);
-        moveSpeedHash = Animator.StringToHash(moveSpeedParameter);
-        attackTriggerHash = Animator.StringToHash(attackTriggerParameter);
-        idleStateHash = Animator.StringToHash(idleStateName);
-        moveStateHash = Animator.StringToHash(moveStateName);
-        attackStateHash = Animator.StringToHash(attackStateName);
+        attackBoolHash = Animator.StringToHash(attackBoolParameter);
 
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
@@ -166,120 +133,30 @@ public class MonsterAI : MonoBehaviour
                 hasMoveBoolParameter = true;
             }
 
-            if (parameter.type == AnimatorControllerParameterType.Float && parameter.nameHash == moveSpeedHash)
+            if (parameter.type == AnimatorControllerParameterType.Bool && parameter.nameHash == attackBoolHash)
             {
-                hasMoveSpeedParameter = true;
-            }
-
-            if (parameter.type == AnimatorControllerParameterType.Trigger && parameter.nameHash == attackTriggerHash)
-            {
-                hasAttackTriggerParameter = true;
+                hasAttackBoolParameter = true;
             }
         }
     }
 
-    private void UpdateMovementAnimation(bool isMoving, float speed)
+    private void SetAttackAnimationState(bool isAttacking)
     {
-        if (animator == null)
+        if (animator == null || !hasAttackBoolParameter)
         {
             return;
         }
 
-        if (hasMoveBoolParameter)
-        {
-            animator.SetBool(moveBoolHash, isMoving);
-        }
-
-        if (hasMoveSpeedParameter)
-        {
-            animator.SetFloat(moveSpeedHash, speed);
-        }
+        animator.SetBool(attackBoolHash, isAttacking);
     }
 
-    private void TryPlayIdleAnimation()
+    private void SetMoveAnimationState(bool isMoving)
     {
-        if (animator == null || currentAnimationState == AnimationState.Idle)
+        if (animator == null || !hasMoveBoolParameter)
         {
             return;
         }
 
-        if (idleStateHash != 0 && animator.HasState(0, idleStateHash))
-        {
-            animator.CrossFade(idleStateHash, 0.1f);
-        }
-
-        currentAnimationState = AnimationState.Idle;
-    }
-
-    private void TryPlayMoveAnimation()
-    {
-        if (animator == null)
-        {
-            return;
-        }
-
-        if (moveStateHash == 0 || !animator.HasState(0, moveStateHash))
-        {
-            currentAnimationState = AnimationState.Move;
-            return;
-        }
-
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        bool alreadyOnMove = stateInfo.shortNameHash == moveStateHash && !animator.IsInTransition(0);
-        if (alreadyOnMove && currentAnimationState == AnimationState.Move)
-        {
-            return;
-        }
-
-        animator.CrossFade(moveStateHash, 0.1f);
-
-        currentAnimationState = AnimationState.Move;
-    }
-
-    private void EnsureMoveAnimationLoop()
-    {
-        if (animator == null || moveStateHash == 0 || !animator.HasState(0, moveStateHash) || animator.IsInTransition(0))
-        {
-            return;
-        }
-
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.shortNameHash != moveStateHash)
-        {
-            animator.CrossFade(moveStateHash, 0.05f);
-            return;
-        }
-
-        // Some imported clips are not set to loop. Restart move clip while moving.
-        if (stateInfo.normalizedTime >= 0.98f)
-        {
-            animator.Play(moveStateHash, 0, 0f);
-        }
-    }
-
-    private bool TryPlayAttackAnimation()
-    {
-        if (animator == null || Time.time < nextAttackTime)
-        {
-            return false;
-        }
-
-        nextAttackTime = Time.time + Mathf.Max(0.1f, attackInterval);
-
-        if (hasAttackTriggerParameter)
-        {
-            animator.SetTrigger(attackTriggerHash);
-            currentAnimationState = AnimationState.Attack;
-            return true;
-        }
-
-        if (attackStateHash != 0 && animator.HasState(0, attackStateHash))
-        {
-            animator.CrossFade(attackStateHash, 0.05f);
-            currentAnimationState = AnimationState.Attack;
-            return true;
-        }
-
-        return false;
+        animator.SetBool(moveBoolHash, isMoving);
     }
 }
