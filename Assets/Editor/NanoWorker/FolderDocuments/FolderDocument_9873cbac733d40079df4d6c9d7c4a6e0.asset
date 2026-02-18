@@ -14,6 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: NanoWorker.Editor::FolderDocument
   _folderId: 5c23af2c4b77403d95f966cd1c93fe6f
   _folderName: GameOver
-  _nodes: []
+  _nodes:
+  - nodeId: 0f2d80b4e9564250990efa3f7f7fcbc8
+    nodeName: GameOver
+    position: {x: 614, y: 168.66667}
+  - nodeId: 6c0da2912080411fbfb9d5b71689a613
+    nodeName: MainMenuButton
+    position: {x: 855.3335, y: 419.3334}
+  - nodeId: 7caad5020fff41f79d1f4b8cb73ad90d
+    nodeName: ScoreUI
+    position: {x: 378.6667, y: 423.33334}
+  - nodeId: f70455db8099415582f58f3185c1bcee
+    nodeName: ReturnValue
+    position: {x: 1260.6667, y: 445.33337}
   _arrows: []
   _folders: []

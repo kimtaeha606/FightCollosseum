@@ -26,7 +26,7 @@ MonoBehaviour:
     position: {x: 394.6545, y: -26.754356}
   - nodeId: 17a72ca13eeb4d689898b239bde74116
     nodeName: MoneyManager
-    position: {x: 934.6426, y: 373.6431}
+    position: {x: 940.76025, y: 388.32547}
   - nodeId: 650e794a177c4592aefae82ce6566b7d
     nodeName: PlayerStatsRepository
     position: {x: 1626.9347, y: 650.7515}

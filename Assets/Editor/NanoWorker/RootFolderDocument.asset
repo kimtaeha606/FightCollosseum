@@ -28,13 +28,13 @@ MonoBehaviour:
   _folders:
   - folderId: b59e3fa4f6c04e2ba4b3ba60bb1df2b6
     folderName: Mainmenu
-    position: {x: 314, y: 629.3333}
+    position: {x: 314, y: 628.10974}
     folderDocument: {fileID: 11400000, guid: de94d090444ee8042b5217b71f30909e, type: 2}
   - folderId: 4bf3da090c5b497bbff63cbb0b06df4b
     folderName: GamePlay
-    position: {x: 749.6505, y: 197.89948}
+    position: {x: 719.8954, y: 150.86374}
     folderDocument: {fileID: 11400000, guid: 12f8c19b851330142bde1f801246a29c, type: 2}
   - folderId: 5c23af2c4b77403d95f966cd1c93fe6f
     folderName: GameOver
-    position: {x: 1414.2374, y: 183.198}
+    position: {x: 1394.2374, y: 162.53131}
     folderDocument: {fileID: 11400000, guid: 4113beee0b126ba47ad88ea9b2b220e9, type: 2}
