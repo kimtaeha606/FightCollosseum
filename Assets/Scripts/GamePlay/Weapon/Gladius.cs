@@ -12,6 +12,11 @@ public class Gladius : MonoBehaviour, IWeapon
 
     private void Awake()
     {
+        if (characterApplier == null)
+        {
+            characterApplier = GetComponentInParent<CharacterApplier>();
+        }
+
         if (targetCollider == null)
         {
             targetCollider = GetComponent<Collider>();
@@ -21,11 +26,13 @@ public class Gladius : MonoBehaviour, IWeapon
         {
             targetCollider.enabled = false;
         }
-        finalDamage = data.baseDamage + characterApplier.CurrentStats.AttackLevel;
+
+        RecalculateDamage();
     }
 
     public void OnInputStart()
     {
+        RecalculateDamage();
         hitTargets.Clear();
 
         if (targetCollider != null)
@@ -68,5 +75,18 @@ public class Gladius : MonoBehaviour, IWeapon
 
         hitTargets.Add(target);
         target.TakeDamage(finalDamage);
+    }
+
+    private void RecalculateDamage()
+    {
+        int baseDamage = data != null ? data.baseDamage : 0;
+        float attackPower = 0f;
+
+        if (characterApplier != null && characterApplier.HasStats)
+        {
+            attackPower = characterApplier.CurrentStats.AttackPower;
+        }
+
+        finalDamage = Mathf.Max(0, baseDamage + Mathf.RoundToInt(attackPower));
     }
 }

@@ -17,7 +17,7 @@ MonoBehaviour:
   _nodes:
   - nodeId: 507fe95742c741d0a48193aba9c63905
     nodeName: AttackUpgradeRequestor
-    position: {x: 172.42291, y: 1152.0348}
+    position: {x: 150.78528, y: 1153.838}
   - nodeId: f60873bc6ce942f2b2117514983d8f46
     nodeName: HpUpgradeRequestor
     position: {x: 674.609, y: 1166.0819}
@@ -26,19 +26,22 @@ MonoBehaviour:
     position: {x: 394.6545, y: -26.754356}
   - nodeId: 17a72ca13eeb4d689898b239bde74116
     nodeName: MoneyManager
-    position: {x: 940.76025, y: 388.32547}
+    position: {x: 1007.47424, y: 368.8245}
   - nodeId: 650e794a177c4592aefae82ce6566b7d
     nodeName: PlayerStatsRepository
     position: {x: 1626.9347, y: 650.7515}
   - nodeId: a28779b2d4e94aea8cb33b6c706c8d3f
     nodeName: UpgradeEventBus
-    position: {x: 401.2338, y: 757.7752}
+    position: {x: 398.40634, y: 754.94763}
   - nodeId: e7168a85ba5145cbb2e20ce154f5f315
     nodeName: UpgradeManager
     position: {x: 396.26315, y: 383.4549}
   - nodeId: a633d07ed15b477dab6f0e51415b45a9
     nodeName: UpgradeModels
     position: {x: 1632.8027, y: 315.62323}
+  - nodeId: 1bb27f7d781f43f88d964a1bcc617f5f
+    nodeName: UpgradeCostRepository
+    position: {x: 1055.1123, y: 702.8807}
   _arrows:
   - fromNodeId: 507fe95742c741d0a48193aba9c63905
     toNodeId: a28779b2d4e94aea8cb33b6c706c8d3f
@@ -57,5 +60,11 @@ MonoBehaviour:
     isEvent: 0
   - fromNodeId: c991b73534854b3eabf6105bfff61c68
     toNodeId: e7168a85ba5145cbb2e20ce154f5f315
+    isEvent: 0
+  - fromNodeId: 1bb27f7d781f43f88d964a1bcc617f5f
+    toNodeId: 650e794a177c4592aefae82ce6566b7d
+    isEvent: 0
+  - fromNodeId: e7168a85ba5145cbb2e20ce154f5f315
+    toNodeId: 1bb27f7d781f43f88d964a1bcc617f5f
     isEvent: 0
   _folders: []
