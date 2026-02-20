@@ -9,15 +9,12 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private float defaultAttackPower = 10f;
     [SerializeField] private float defaultMaxHp = 100f;
 
-    [Header("Upgrade Costs")]
-    [SerializeField] private int attackUpgradeCost = 50;
-    [SerializeField] private int hpUpgradeCost = 50;
-
     [Header("Upgrade Values")]
     [SerializeField] private float attackPerLevel = 5f;
     [SerializeField] private float hpPerLevel = 20f;
 
     private PlayerStatsSnapshot currentStats;
+    public PlayerStatsSnapshot CurrentStats => currentStats;
 
     private void Awake()
     {
@@ -48,8 +45,7 @@ public class UpgradeManager : MonoBehaviour
         }
 
         int amount = Mathf.Max(1, request.Amount);
-        int unitCost = request.Type == UpgradeType.Attack ? attackUpgradeCost : hpUpgradeCost;
-        int totalCost = unitCost * amount;
+        int totalCost = UpgradeCostRepository.GetTotalCost(request.Type, amount);
 
         if (!moneyManager.TrySpend(totalCost))
         {

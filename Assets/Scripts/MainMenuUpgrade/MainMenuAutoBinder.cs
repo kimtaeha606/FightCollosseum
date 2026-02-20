@@ -8,6 +8,8 @@ public class MainMenuAutoBinder : MonoBehaviour
     [SerializeField] private string attackButtonName = "AttackUpgradeButton";
     [SerializeField] private string hpButtonName = "HpUpgradeButton";
     [SerializeField] private string playButtonName = "PlayButton";
+    [SerializeField] private string controlGuideButtonName = "ControlGuideButton";
+    [SerializeField] private string controlGuideCloseButtonName = "ControlGuideCloseButton";
 
     private void Awake()
     {
@@ -43,10 +45,14 @@ public class MainMenuAutoBinder : MonoBehaviour
         Button attackButton = FindComponentOnObject<Button>(attackButtonName);
         Button hpButton = FindComponentOnObject<Button>(hpButtonName);
         Button playButton = FindComponentOnObject<Button>(playButtonName);
+        Button controlGuideButton = FindComponentOnObject<Button>(controlGuideButtonName);
+        Button controlGuideCloseButton = FindComponentOnObject<Button>(controlGuideCloseButtonName);
 
         AttackUpgradeRequestor attackRequestor = FindComponentOnObject<AttackUpgradeRequestor>(attackButtonName);
         HPUpgradeRequestor hpRequestor = FindComponentOnObject<HPUpgradeRequestor>(hpButtonName);
         MainMenuPlayButton playHandler = FindComponentOnObject<MainMenuPlayButton>(playButtonName);
+        ControlGuideRequestor controlGuideRequestor = FindComponentOnObject<ControlGuideRequestor>(controlGuideButtonName);
+        ControlGuideRequestor controlGuideCloseRequestor = FindComponentOnObject<ControlGuideRequestor>(controlGuideCloseButtonName);
 
         if (attackButton != null && attackRequestor != null)
         {
@@ -65,6 +71,18 @@ public class MainMenuAutoBinder : MonoBehaviour
             playButton.onClick.RemoveAllListeners();
             playButton.onClick.AddListener(playHandler.OnClickPlay);
         }
+
+        if (controlGuideButton != null && controlGuideRequestor != null)
+        {
+            controlGuideButton.onClick.RemoveAllListeners();
+            controlGuideButton.onClick.AddListener(controlGuideRequestor.RequestGuide);
+        }
+
+        if (controlGuideCloseButton != null && controlGuideCloseRequestor != null)
+        {
+            controlGuideCloseButton.onClick.RemoveAllListeners();
+            controlGuideCloseButton.onClick.AddListener(controlGuideCloseRequestor.RequestCloseGuide);
+        }
     }
 
     private static T FindComponentOnObject<T>(string objectName) where T : Component
@@ -72,6 +90,21 @@ public class MainMenuAutoBinder : MonoBehaviour
         GameObject go = GameObject.Find(objectName);
         if (go == null)
         {
+            T[] components = Resources.FindObjectsOfTypeAll<T>();
+            for (int i = 0; i < components.Length; i++)
+            {
+                T component = components[i];
+                if (component == null)
+                {
+                    continue;
+                }
+
+                if (component.gameObject.name == objectName && component.gameObject.scene.IsValid())
+                {
+                    return component;
+                }
+            }
+
             return null;
         }
 
