@@ -19,10 +19,12 @@ public class MonsterData : ScriptableObject
     [Min(0f)] [SerializeField] private float moveSpeed = 3f;
     [Min(0f)] [SerializeField] private float turnSpeed = 10f;
     [Min(0f)] [SerializeField] private float attackRange = 2f;
+    [Min(0)] [SerializeField] private int killScore = 100;
 
     public MonsterType MonsterType => monsterType;
     public float MaxHp => maxHp;
     public float MoveSpeed => moveSpeed;
     public float TurnSpeed => turnSpeed;
     public float AttackRange => attackRange;
+    public int KillScore => killScore;
 }

@@ -15,15 +15,17 @@ public class MonsterAI : MonoBehaviour
 
     [Header("Combat Settings")]
     [SerializeField] private float attackRange = 2f;
+    [SerializeField] private Collider attackCollider;
 
     [Header("Animation Settings")]
-    [SerializeField] private string moveBoolParameter = "IsMove";
-    [SerializeField] private string attackBoolParameter = "Attack";
+    [SerializeField] private string moveStateName = "Move";
+    [SerializeField] private string attackStateName = "AttackAnimation";
+    [SerializeField] private float attackAnimationLockTime = 0.35f;
 
-    private int moveBoolHash = -1;
-    private int attackBoolHash = -1;
-    private bool hasMoveBoolParameter;
-    private bool hasAttackBoolParameter;
+    private int moveStateHash;
+    private int attackStateHash;
+    private bool wasMoving;
+    private float attackAnimationLockRemaining;
 
     private void Reset()
     {
@@ -71,6 +73,16 @@ public class MonsterAI : MonoBehaviour
             animator = GetComponentInChildren<Animator>();
         }
 
+        if (attackCollider == null)
+        {
+            attackCollider = GetComponent<Collider>();
+        }
+
+        if (attackCollider != null)
+        {
+            attackCollider.enabled = false;
+        }
+
         CacheAnimatorParameters();
     }
 
@@ -89,13 +101,12 @@ public class MonsterAI : MonoBehaviour
         if (distanceToPlayer <= attackRange)
         {
             rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
-            SetMoveAnimationState(false);
-            SetAttackAnimationState(true);
+            UpdateMovementAnimation(false);
+            TryPlayAttackAnimation();
             return;
         }
 
-        SetAttackAnimationState(false);
-        SetMoveAnimationState(true);
+        UpdateMovementAnimation(true);
 
         if (toPlayer.sqrMagnitude <= Mathf.Epsilon)
         {
@@ -116,6 +127,22 @@ public class MonsterAI : MonoBehaviour
         player = target;
     }
 
+    public void OnAttackEnd()
+    {
+        if (attackCollider != null)
+        {
+            attackCollider.enabled = false;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (attackCollider != null)
+        {
+            attackCollider.enabled = false;
+        }
+    }
+
     private void CacheAnimatorParameters()
     {
         if (animator == null)
@@ -123,40 +150,94 @@ public class MonsterAI : MonoBehaviour
             return;
         }
 
-        moveBoolHash = Animator.StringToHash(moveBoolParameter);
-        attackBoolHash = Animator.StringToHash(attackBoolParameter);
-
-        foreach (AnimatorControllerParameter parameter in animator.parameters)
-        {
-            if (parameter.type == AnimatorControllerParameterType.Bool && parameter.nameHash == moveBoolHash)
-            {
-                hasMoveBoolParameter = true;
-            }
-
-            if (parameter.type == AnimatorControllerParameterType.Bool && parameter.nameHash == attackBoolHash)
-            {
-                hasAttackBoolParameter = true;
-            }
-        }
+        moveStateHash = ResolveStateHash(moveStateName);
+        attackStateHash = ResolveAttackStateHash();
     }
 
-    private void SetAttackAnimationState(bool isAttacking)
+    private void TryPlayAttackAnimation()
     {
-        if (animator == null || !hasAttackBoolParameter)
+        if (attackAnimationLockRemaining > 0f)
+        {
+            attackAnimationLockRemaining -= Time.fixedDeltaTime;
+            return;
+        }
+
+        if (animator == null || attackStateHash == 0 || !animator.HasState(0, attackStateHash))
         {
             return;
         }
 
-        animator.SetBool(attackBoolHash, isAttacking);
+        attackAnimationLockRemaining = Mathf.Max(attackAnimationLockTime, 0f);
+        animator.CrossFade(attackStateHash, 0.05f, 0);
+
+        if (attackCollider != null)
+        {
+            attackCollider.enabled = true;
+        }
     }
 
-    private void SetMoveAnimationState(bool isMoving)
+    private void UpdateMovementAnimation(bool isMoving)
     {
-        if (animator == null || !hasMoveBoolParameter)
+        if (animator == null)
         {
             return;
         }
 
-        animator.SetBool(moveBoolHash, isMoving);
+        if (isMoving == wasMoving)
+        {
+            return;
+        }
+
+        wasMoving = isMoving;
+
+        if (!isMoving)
+        {
+            return;
+        }
+
+        if (moveStateHash == 0 || !animator.HasState(0, moveStateHash))
+        {
+            return;
+        }
+
+        animator.CrossFade(moveStateHash, 0.1f, 0);
+    }
+
+    private int ResolveAttackStateHash()
+    {
+        if (animator == null)
+        {
+            return 0;
+        }
+
+        int configuredHash = ResolveStateHash(attackStateName);
+        if (configuredHash != 0)
+        {
+            return configuredHash;
+        }
+
+        return 0;
+    }
+
+    private int ResolveStateHash(string stateName)
+    {
+        if (animator == null || string.IsNullOrWhiteSpace(stateName))
+        {
+            return 0;
+        }
+
+        int shortNameHash = Animator.StringToHash(stateName);
+        if (animator.HasState(0, shortNameHash))
+        {
+            return shortNameHash;
+        }
+
+        int fullPathHash = Animator.StringToHash($"Base Layer.{stateName}");
+        if (animator.HasState(0, fullPathHash))
+        {
+            return fullPathHash;
+        }
+
+        return 0;
     }
 }

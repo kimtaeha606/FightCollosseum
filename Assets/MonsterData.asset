@@ -15,5 +15,5 @@ MonoBehaviour:
   monsterType: 0
   maxHp: 100
   moveSpeed: 3
-  turnSpeed: 10
-  attackRange: 2
+  turnSpeed: 5
+  attackRange: 5

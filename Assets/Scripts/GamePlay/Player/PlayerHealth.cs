@@ -30,12 +30,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        Debug.Log(CurrentHp);
         if (damage <= 0f || IsDead)
         {
             return;
         }
 
         CurrentHp = Mathf.Max(0f, CurrentHp - damage);
+        Debug.Log(CurrentHp);
 
         if (IsDead)
         {

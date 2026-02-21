@@ -23,7 +23,7 @@ MonoBehaviour:
     position: {x: 955.3392, y: 381.53882}
   - nodeId: 986a50e3c7854b8b956b3265f477289f
     nodeName: IWeapon
-    position: {x: -41.832928, y: 368.33282}
+    position: {x: -46.901398, y: 378.46976}
   _arrows:
   - fromNodeId: 207727f74f224ebf9ce379c59d5712f3
     toNodeId: 05ba8b2fb6814ea881e12e0ce29cc8fe

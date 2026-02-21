@@ -7,6 +7,7 @@ public class MoveController : MonoBehaviour
     [Header("References")]
     [SerializeField] private CharacterController characterController;
     [SerializeField] private LookController lookController;
+    [SerializeField] private Animator animator;
 
     [Header("Move Settings")]
     [SerializeField] private float moveSpeed = 5f;
@@ -14,13 +15,25 @@ public class MoveController : MonoBehaviour
     [SerializeField] private float gravity = -19.62f;
     [SerializeField] private float groundedStickForce = -2f;
 
+    [Header("Animation Settings")]
+    [SerializeField] private string moveStateName = "Move";
+    [SerializeField] private string attackStateName = "AttackAnimation";
+    [SerializeField] private string idleStateName = "Idle";
+    [SerializeField] private float attackAnimationLockTime = 0.35f;
+
     private Vector2 moveInput;
     private float verticalVelocity;
     private bool jumpRequested;
+    private bool wasMoving;
+    private float attackAnimationLockRemaining;
+    private int moveStateHash;
+    private int attackStateHash;
+    private int idleStateHash;
 
     private void Reset()
     {
         characterController = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Awake()
@@ -29,6 +42,15 @@ public class MoveController : MonoBehaviour
         {
             characterController = GetComponent<CharacterController>();
         }
+
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
+
+        moveStateHash = string.IsNullOrWhiteSpace(moveStateName) ? 0 : Animator.StringToHash(moveStateName);
+        attackStateHash = string.IsNullOrWhiteSpace(attackStateName) ? 0 : Animator.StringToHash(attackStateName);
+        idleStateHash = string.IsNullOrWhiteSpace(idleStateName) ? 0 : Animator.StringToHash(idleStateName);
     }
 
     private void Update()
@@ -60,6 +82,9 @@ public class MoveController : MonoBehaviour
             moveDirection.Normalize();
         }
 
+        bool isMoving = moveDirection.sqrMagnitude > 0.0001f;
+        UpdateMovementAnimation(isMoving);
+
         bool isGrounded = characterController.isGrounded;
 
         if (isGrounded && verticalVelocity < 0f)
@@ -83,6 +108,17 @@ public class MoveController : MonoBehaviour
         characterController.Move(velocity * Time.deltaTime);
     }
 
+    public void PlayAttackAnimation()
+    {
+        if (animator == null || attackStateHash == 0 || !animator.HasState(0, attackStateHash))
+        {
+            return;
+        }
+
+        attackAnimationLockRemaining = Mathf.Max(attackAnimationLockTime, 0f);
+        animator.CrossFade(attackStateHash, 0.05f, 0);
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -100,6 +136,38 @@ public class MoveController : MonoBehaviour
         if (context.started)
         {
             jumpRequested = true;
+        }
+    }
+
+    private void UpdateMovementAnimation(bool isMoving)
+    {
+        if (animator == null)
+        {
+            return;
+        }
+
+        if (attackAnimationLockRemaining > 0f)
+        {
+            attackAnimationLockRemaining -= Time.deltaTime;
+            return;
+        }
+
+        if (isMoving == wasMoving)
+        {
+            return;
+        }
+
+        wasMoving = isMoving;
+
+        if (isMoving && moveStateHash != 0 && animator.HasState(0, moveStateHash))
+        {
+            animator.CrossFade(moveStateHash, 0.1f, 0);
+            return;
+        }
+
+        if (!isMoving && idleStateHash != 0 && animator.HasState(0, idleStateHash))
+        {
+            animator.CrossFade(idleStateHash, 0.1f, 0);
         }
     }
 }

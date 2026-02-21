@@ -6,6 +6,7 @@ public class Gladius : MonoBehaviour, IWeapon
     [SerializeField] private Collider targetCollider;
     [SerializeField] private WeaponData data;
     [SerializeField] private CharacterApplier characterApplier;
+    [SerializeField] private MoveController moveController;
     private int finalDamage; // 최종 계산된 데미지
 
     private readonly HashSet<IDamageable> hitTargets = new HashSet<IDamageable>();
@@ -22,6 +23,11 @@ public class Gladius : MonoBehaviour, IWeapon
             targetCollider = GetComponent<Collider>();
         }
 
+        if (moveController == null)
+        {
+            moveController = GetComponentInParent<MoveController>();
+        }
+
         if (targetCollider != null)
         {
             targetCollider.enabled = false;
@@ -34,6 +40,7 @@ public class Gladius : MonoBehaviour, IWeapon
     {
         RecalculateDamage();
         hitTargets.Clear();
+        moveController?.PlayAttackAnimation();
 
         if (targetCollider != null)
         {
@@ -48,6 +55,15 @@ public class Gladius : MonoBehaviour, IWeapon
     public void OnInputEnd()
     {
         
+    }
+
+    public void OnAttackEnd()
+    {
+        if (targetCollider != null)
+        {
+            targetCollider.enabled = false;
+            Debug.Log("이벤트연결됨");
+        }
     }
 
     private void OnTriggerEnter(Collider other)

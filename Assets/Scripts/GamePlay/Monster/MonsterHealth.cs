@@ -9,7 +9,7 @@ public class MonsterHealth : MonoBehaviour, IDamageable
     public float CurrentHp { get; private set; }
     public bool IsDead => CurrentHp <= 0f;
     public event Action Died;
-    public static event Action<MonsterHealth> AnyMonsterDied;
+    public static event Action<int> AnyMonsterDied;
 
     private void Awake()
     {
@@ -45,7 +45,8 @@ public class MonsterHealth : MonoBehaviour, IDamageable
         if (IsDead)
         {
             Died?.Invoke();
-            AnyMonsterDied?.Invoke(this);
+            int killScore = monsterData != null ? monsterData.KillScore : 0;
+            AnyMonsterDied?.Invoke(killScore);
             Destroy(gameObject);
         }
     }

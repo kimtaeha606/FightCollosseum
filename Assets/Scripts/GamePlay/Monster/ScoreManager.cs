@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] private int scorePerMonsterKill = 100;
     [SerializeField] private int currentScore;
 
     public int CurrentScore => currentScore;
@@ -36,8 +35,8 @@ public class ScoreManager : MonoBehaviour
         ScoreChanged?.Invoke(currentScore);
     }
 
-    private void HandleMonsterDied(MonsterHealth _)
+    private void HandleMonsterDied(int killScore)
     {
-        AddScore(scorePerMonsterKill);
+        AddScore(killScore);
     }
 }
